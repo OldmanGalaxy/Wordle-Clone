@@ -80,9 +80,11 @@ header {
   text-decoration: none;
   text-shadow: none;
   line-height: 60px;
+  cursor: pointer;
 }
 
 .enter, .delete {
+  cursor: pointer;
   background-color: #818384;
   margin: 3px;
   text-align: center;
