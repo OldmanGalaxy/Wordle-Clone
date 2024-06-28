@@ -10,6 +10,11 @@ body {
   src: url("KarnakPro-CondensedBlack.ttf");
 }
 
+@font-face {
+  font-family: "nyt-franklin";
+  src: url("LibreFranklin-Bold.ttf");
+}
+
 header {
   font-family: "karnak";
   border-bottom: 1px solid #434343;
@@ -38,8 +43,59 @@ header {
 }
 
 .cell {
-  margin: 3px;
+  margin: 2.5px;
   border: 2px solid #434343;
   width: 48px;
   height: 48px;
+}
+
+.keyboard-container {
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+.keyboard-display {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.keyboard-row1, .keyboard-row2, .keyboard-row3 {
+  width: 700px;
+  display: flex;
+  justify-content: center;
+}
+
+.key {
+  width: 44px;
+  height: 60px;
+  background-color: #818384;
+  margin: 3px;
+  text-align: center;
+  font-family: "nyt-franklin";
+  font-weight: bolder;
+  font-size: 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  text-shadow: none;
+  line-height: 60px;
+}
+
+.enter, .delete {
+  background-color: #818384;
+  margin: 3px;
+  text-align: center;
+  font-family: "nyt-franklin";
+  font-size: 12px;
+  font-weight: bolder;
+  border-radius: 5px;
+  width: 70px;
+  height: 60px;
+  line-height: 60px;
+}
+
+.material-icons {
+  position: relative;
+  top: 8px;
 }
