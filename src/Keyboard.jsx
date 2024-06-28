@@ -36,7 +36,7 @@ export default function Keyboard() {
                     <div className="key n">N</div>
                     <div className="key m">M</div>
                     <div className="delete">
-                        <i class="material-icons">backspace</i>
+                        <i className="material-icons">backspace</i>
                     </div>
                 </div>
             </div>
