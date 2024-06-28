@@ -1,4 +1,45 @@
 body {
   margin: 0;
   padding: 0;
+  background-color: #121213;
+  color: #EFEFEF;
+}
+
+@font-face {
+  font-family: "karnak";
+  src: url("KarnakPro-CondensedBlack.ttf");
+}
+
+header {
+  font-family: "karnak";
+  border-bottom: 1px solid #434343;
+}
+
+.header-container {
+  margin: 10px;
+  font-size: 36px;
+  letter-spacing: 2px;
+  display: flex;
+  justify-content: center;
+}
+
+.guesses-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.row1, .row2, .row3, .row4, .row5, .row6 {
+  margin: 1px;
+  display: flex;
+  justify-content: center;
+}
+
+.cell {
+  margin: 3px;
+  border: 2px solid #434343;
+  width: 48px;
+  height: 48px;
 }
