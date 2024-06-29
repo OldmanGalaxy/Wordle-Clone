@@ -1,14 +1,15 @@
 import {useEffect, useState} from "react";
 
+const API_URL = "https://random-word-api.vercel.app/api?words=1&length=5";
+
 export default function Keyboard() {
-    const API_URL = "https://random-word-api.vercel.app/api?words=1&length=5";
     const [solution, setSolution] = useState("");
     const [guesses, setGuesses] = useState(Array(6).fill(null));
-    const [guess, setGuess] = useState("");
+    const [currGuess, setCurrGuess] = useState("");
 
     useEffect(() => {
         const handleKeyDown = (event) => {
-            setGuess(g => g + event.key);
+            setCurrGuess(g => g + event.key);
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
@@ -25,6 +26,12 @@ export default function Keyboard() {
 
     return (
         <>
+        <div className="guesses-container">
+            {guesses.map((guess, i) => {
+                const isCurrGuess = i === guesses.findIndex(val => val == null);
+                return (<Row guess={isCurrGuess ? currGuess : guess ?? ""}/>);
+            })}
+        </div>
         <div className='keyboard-container'>
             <div className='keyboard-display'>
                 <div className="keyboard-row1">
@@ -65,7 +72,20 @@ export default function Keyboard() {
                 </div>
             </div>
         </div>
-        <div className="testing">{guess}</div>
+        <div className="testing">{currGuess}</div>
         </>
     )
 }
+
+function Row({guess}) {
+    const cells = [];
+    for (let i = 0; i < 5; i++) {
+        const char = guess[i];
+        cells.push(<div key={i} className="cell">{char}</div>)
+    }
+    return (
+        <div className="row">
+            {cells}
+        </div>
+    );
+};

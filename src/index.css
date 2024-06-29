@@ -33,20 +33,25 @@ header {
   justify-content: center;
   flex-direction: column;
   width: 100%;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
-.row1, .row2, .row3, .row4, .row5, .row6 {
-  margin: 1px;
+.row {
   display: flex;
   justify-content: center;
+  gap: 5px;
 }
 
 .cell {
-  margin: 2.5px;
+  width: 50px;
+  height: 50px;
   border: 2px solid #434343;
-  width: 48px;
-  height: 48px;
+  margin-top: 5px;
+  line-height: 50px;
+  text-align: center;
+  font-size: 30px;
+  font-family: "nyt-franklin";
+  text-transform: capitalize;
 }
 
 .keyboard-container {
@@ -71,7 +76,7 @@ header {
   width: 44px;
   height: 60px;
   background-color: #818384;
-  margin: 3px;
+  margin: 3.5px;
   text-align: center;
   font-family: "nyt-franklin";
   font-weight: bolder;
