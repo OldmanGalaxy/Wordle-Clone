@@ -6,20 +6,46 @@ export default function Keyboard() {
     const [solution, setSolution] = useState("");
     const [guesses, setGuesses] = useState(Array(6).fill(null));
     const [currGuess, setCurrGuess] = useState("");
+    const [gameOver, setGameOver] = useState(false);
+    const allowedLetters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    console.log(solution);
 
     useEffect(() => {
         const handleKeyDown = (event) => {
+            if (gameOver)
+                return;
+            if (event.key === 'Enter') {
+                if (currGuess.length !== 5)
+                    return;
+                let tempGuess = currGuess;
+                const isCorrect = solution === tempGuess.toLowerCase();
+                console.log(isCorrect);
+                const newGuesses = [...guesses];
+                newGuesses[guesses.findIndex(val => val == null)] = currGuess;
+                setGuesses(newGuesses);
+                setCurrGuess('');
+                if (isCorrect)
+                    setGameOver(true);
+            }
+            if (event.key === 'Backspace') {
+                setCurrGuess(currGuess.slice(0, -1));
+                return;
+            }
+            if (!allowedLetters.includes(event.key))
+                return;
+            if (currGuess.length >= 5)
+                return;
             setCurrGuess(g => g + event.key);
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, []);
+    }, [currGuess, gameOver, solution, guesses]);
 
     useEffect(() => {
         const fetchWord = async () => {
             const response = await fetch(API_URL);
             const word = await response.json();
-            setSolution(word);
+            setSolution(word[0].toString());
         }
         fetchWord();
     }, []);
@@ -29,7 +55,7 @@ export default function Keyboard() {
         <div className="guesses-container">
             {guesses.map((guess, i) => {
                 const isCurrGuess = i === guesses.findIndex(val => val == null);
-                return (<Row guess={isCurrGuess ? currGuess : guess ?? ""}/>);
+                return (<Row guess={isCurrGuess ? currGuess : guess ?? ""} isGuessed={!isCurrGuess && guess != null} solution={solution}/>);
             })}
         </div>
         <div className='keyboard-container'>
@@ -72,16 +98,26 @@ export default function Keyboard() {
                 </div>
             </div>
         </div>
-        <div className="testing">{currGuess}</div>
         </>
-    )
+    );
 }
 
-function Row({guess}) {
+function Row({guess, isGuessed, solution}) {
     const cells = [];
+    let class_name = 'cell';
+    let tempGuess = guess.toLowerCase();
+
     for (let i = 0; i < 5; i++) {
-        const char = guess[i];
-        cells.push(<div key={i} className="cell">{char}</div>)
+        const char = tempGuess[i];
+        if (isGuessed) {
+            if (char === solution[i])
+                class_name += ' correct';
+            else if (solution.includes(char))
+                class_name += ' misplaced';
+            else
+                class_name += ' wrong';
+        }    
+        cells.push(<div key={i} className={class_name}>{char}</div>)
     }
     return (
         <div className="row">

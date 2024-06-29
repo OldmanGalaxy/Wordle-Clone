@@ -43,6 +43,7 @@ header {
 }
 
 .cell {
+  color: #fcfcfc;
   width: 50px;
   height: 50px;
   border: 2px solid #434343;
@@ -52,6 +53,18 @@ header {
   font-size: 30px;
   font-family: "nyt-franklin";
   text-transform: capitalize;
+}
+
+.correct {
+  background-color: #638c54;
+}
+
+.misplaced {
+  background-color: #b49f4c;
+}
+
+.wrong {
+  background-color: #3a3a3c;
 }
 
 .keyboard-container {
@@ -105,8 +118,4 @@ header {
 .material-icons {
   position: relative;
   top: 8px;
-}
-
-.testing {
-  color: white;
 }
