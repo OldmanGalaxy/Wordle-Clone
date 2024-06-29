@@ -1,4 +1,28 @@
+import {useEffect, useState} from "react";
+
 export default function Keyboard() {
+    const API_URL = "https://random-word-api.vercel.app/api?words=1&length=5";
+    const [solution, setSolution] = useState("");
+    const [guesses, setGuesses] = useState(Array(6).fill(null));
+    const [guess, setGuess] = useState("");
+
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            setGuess(g => g + event.key);
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
+
+    useEffect(() => {
+        const fetchWord = async () => {
+            const response = await fetch(API_URL);
+            const word = await response.json();
+            setSolution(word);
+        }
+        fetchWord();
+    }, []);
+
     return (
         <>
         <div className='keyboard-container'>
@@ -41,6 +65,7 @@ export default function Keyboard() {
                 </div>
             </div>
         </div>
+        <div className="testing">{guess}</div>
         </>
     )
 }

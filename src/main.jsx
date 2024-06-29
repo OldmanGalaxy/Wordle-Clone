@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client'
 import Body from './Body.jsx'
 import Header from './Header.jsx'
 import Keyboard from './Keyboard.jsx'
-import Logic from './Logic.jsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -11,6 +10,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Header />
     <Body />
     <Keyboard />
-    <Logic />
   </React.StrictMode>,
 )
