@@ -7,8 +7,8 @@ export default function Keyboard() {
     const [guesses, setGuesses] = useState(Array(6).fill(null));
     const [currGuess, setCurrGuess] = useState("");
     const [gameOver, setGameOver] = useState(false);
+    const [key, setKey] = useState('');
     const allowedLetters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-    console.log(solution);
 
     useEffect(() => {
         const handleKeyDown = (event) => {
@@ -24,11 +24,13 @@ export default function Keyboard() {
                 newGuesses[guesses.findIndex(val => val == null)] = currGuess;
                 setGuesses(newGuesses);
                 setCurrGuess('');
+                setKey('');
                 if (isCorrect)
                     setGameOver(true);
             }
             if (event.key === 'Backspace') {
                 setCurrGuess(currGuess.slice(0, -1));
+                setKey('');
                 return;
             }
             if (!allowedLetters.includes(event.key))
@@ -36,10 +38,45 @@ export default function Keyboard() {
             if (currGuess.length >= 5)
                 return;
             setCurrGuess(g => g + event.key);
+            setKey('');
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [currGuess, gameOver, solution, guesses]);
+
+    useEffect(() => {
+        const handleButtonPress = (event) => {
+            if (gameOver)
+                return;
+            if (key === 'Enter') {
+                if (currGuess.length !== 5)
+                    return;
+                let tempGuess = currGuess;
+                const isCorrect = solution === tempGuess.toLowerCase();
+                console.log(isCorrect);
+                const newGuesses = [...guesses];
+                newGuesses[guesses.findIndex(val => val == null)] = currGuess;
+                setKey('');
+                setGuesses(newGuesses);
+                setCurrGuess('');
+                if (isCorrect)
+                    setGameOver(true);
+            }
+            if (key === 'Backspace') {
+                setCurrGuess(currGuess.slice(0, -1));
+                setKey('');
+                return;
+            }
+            if (!allowedLetters.includes(key))
+                return;
+            if (currGuess.length >= 5)
+                return;
+            setCurrGuess(g => g + key);
+            setKey('');
+        }
+        window.addEventListener('click', handleButtonPress);
+        return () => window.removeEventListener('click', handleButtonPress);
+    }, [key]);
 
     useEffect(() => {
         const fetchWord = async () => {
@@ -61,40 +98,40 @@ export default function Keyboard() {
         <div className='keyboard-container'>
             <div className='keyboard-display'>
                 <div className="keyboard-row1">
-                    <div className="key q">Q</div>
-                    <div className="key w">W</div>
-                    <div className="key e">E</div>
-                    <div className="key r">R</div>
-                    <div className="key t">T</div>
-                    <div className="key y">Y</div>
-                    <div className="key u">U</div>
-                    <div className="key i">I</div>
-                    <div className="key o">O</div>
-                    <div className="key p">P</div>
+                    <button className="key q" onClick={() => setKey('q')}>Q</button>
+                    <button className="key w" onClick={() => setKey('w')}>W</button>
+                    <button className="key e" onClick={() => setKey('e')}>E</button>
+                    <button className="key r" onClick={() => setKey('r')}>R</button>
+                    <button className="key t" onClick={() => setKey('t')}>T</button>
+                    <button className="key y" onClick={() => setKey('y')}>Y</button>
+                    <button className="key u" onClick={() => setKey('u')}>U</button>
+                    <button className="key i" onClick={() => setKey('i')}>I</button>
+                    <button className="key o" onClick={() => setKey('o')}>O</button>
+                    <button className="key p" onClick={() => setKey('p')}>P</button>
                 </div>
                 <div className="keyboard-row2">
-                    <div className="key a">A</div>
-                    <div className="key s">S</div>
-                    <div className="key d">D</div>
-                    <div className="key f">F</div>
-                    <div className="key g">G</div>
-                    <div className="key h">H</div>
-                    <div className="key j">J</div>
-                    <div className="key k">K</div>
-                    <div className="key l">L</div>
+                    <button className="key a" onClick={() => setKey('a')}>A</button>
+                    <button className="key s" onClick={() => setKey('s')}>S</button>
+                    <button className="key d" onClick={() => setKey('d')}>D</button>
+                    <button className="key f" onClick={() => setKey('f')}>F</button>
+                    <button className="key g" onClick={() => setKey('g')}>G</button>
+                    <button className="key h" onClick={() => setKey('h')}>H</button>
+                    <button className="key j" onClick={() => setKey('j')}>J</button>
+                    <button className="key k" onClick={() => setKey('k')}>K</button>
+                    <button className="key l" onClick={() => setKey('l')}>L</button>
                 </div>
                 <div className="keyboard-row3">
-                    <div className="enter">ENTER</div>
-                    <div className="key z">Z</div>
-                    <div className="key x">X</div>
-                    <div className="key c">C</div>
-                    <div className="key v">V</div>
-                    <div className="key b">B</div>
-                    <div className="key n">N</div>
-                    <div className="key m">M</div>
-                    <div className="delete">
+                    <button className="enter" onClick={() => setKey('Enter')}>ENTER</button>
+                    <button className="key z" onClick={() => setKey('z')}>Z</button>
+                    <button className="key x" onClick={() => setKey('x')}>X</button>
+                    <button className="key c" onClick={() => setKey('c')}>C</button>
+                    <button className="key v" onClick={() => setKey('v')}>V</button>
+                    <button className="key b" onClick={() => setKey('b')}>B</button>
+                    <button className="key n" onClick={() => setKey('n')}>N</button>
+                    <button className="key m" onClick={() => setKey('m')}>M</button>
+                    <button className="delete" onClick={() => setKey('Backspace')}>
                         <i className="material-icons">backspace</i>
-                    </div>
+                    </button>
                 </div>
             </div>
         </div>
